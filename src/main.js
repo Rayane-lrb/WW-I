@@ -1,22 +1,76 @@
-"use strict";
-console.log("test");
-const body = document.body;
-const themeBtn = document.getElementById("themeBtn");
+  "use strict";
+  const body = document.body;
+  const themeBtn = document.getElementById("themeBtn");
+  const themeBtnImg = document.getElementById("themeBtn-img");
+  const resultContainer = document.getElementById("results-container");
+  const searchBar = document.getElementById("searchInput");
+  
+  function themeSwitch(theme) {
+    body.classList.remove("light-theme", "dark-theme");
+    body.classList.add(theme);
+    
+    if(theme === "light-theme") {
+    themeBtnImg.src = "/public/moon.svg";
+    } else if(theme === "dark-theme")
+      {
+      themeBtnImg.src = "/public/sun.svg";
+    }
+  }
 
-function themeSwitch(theme) {
-  body.classList.remove("light-theme", "dark-theme");
-  body.classList.add(theme);
-}
+  themeBtn.addEventListener("click", () => {
+    const newTheme = body.classList.contains("dark-theme")
+      ? "light-theme"
+      : "dark-theme";
+    localStorage.setItem("theme", newTheme);
+    themeSwitch(newTheme);
+  });
 
-themeBtn.addEventListener("click", () => {
-  const newTheme = body.classList.contains("dark-theme")
-    ? "light-theme"
-    : "dark-theme";
-  localStorage.setItem("theme", newTheme);
-  themeSwitch(newTheme);
-});
+  const savedTheme = localStorage.getItem("theme") || "light-theme";
+  window.addEventListener("load", () => {
+    themeSwitch(savedTheme);
+    fetchImages();
+  });
 
-const savedTheme = localStorage.getItem("theme") || "light-theme";
-window.addEventListener("load", () => {
-  themeSwitch(savedTheme);
-});
+  async function fetchImages() {
+    try {
+    const response = await fetch("https://opendata.brussels.be/api/explore/v2.1/catalog/datasets/parcours_street_art/records?limit=20");
+    const data = await response.json();
+
+    displayImages(data);
+    }
+    catch(error) {
+      throw new Error(error);
+    }
+  }
+
+  function displayImages(data) {
+    data.results.forEach((item) => {
+        const divCard = document.createElement("div");
+        divCard.classList.add("card", "hidden");
+    divCard.innerHTML = `
+    <img src="${item.url_image ? item.url_image.url : "/placeholder.jpg"}" loading="lazy"></img>
+    <div class="card-info">
+    <h3 id="art_name">${item.name_nl}</h3>
+    <div class="name_date_div">
+    <h3 id="artist_name">${item.artist_name}</h3>
+    <h5>${item.real_date}</h5>
+    </div>
+    <h5>${item.postalcode}</h5>
+    </div>
+  
+    `;
+    resultContainer.appendChild(divCard);
+    observer.observe(divCard);
+    })
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if(entry.isIntersecting) {
+        entry.target.classList.remove("hidden");
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  });
+
+
