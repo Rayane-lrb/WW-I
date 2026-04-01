@@ -1,5 +1,5 @@
 body.dark-theme {
-  background-color: #2C2C2C;
+  background-color: #2c2c2c;
   color: white;
 }
 body.light-theme {
@@ -84,13 +84,13 @@ button#themeBtn img {
   width: 30%;
   height: 350px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
 }
 .card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   transform: scale(1.05);
 }
 .card img {
@@ -124,9 +124,9 @@ button#themeBtn img {
 .card-info .name_date_div {
   display: block;
 }
-.card-info .name_date_div h3{
+.card-info .name_date_div h3 {
   float: right;
 }
-.card-info .name_date_div h5{
+.card-info .name_date_div h5 {
   float: left;
 }
