@@ -7,6 +7,8 @@ body.light-theme {
   color: black;
 }
 body {
+  margin: 0;
+  padding: 0;
   font-size: 20px;
 }
 a {
@@ -14,8 +16,25 @@ a {
   color: black;
 }
 
+nav {
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+/* ← dit lost het probleem op */
+nav::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .nav-left {
   float: left;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .nav-right {
@@ -28,6 +47,10 @@ a {
 
 .nav-left ul {
   float: right;
+}
+
+.nav-left-links a:hover {
+  font-weight: bold;
 }
 
 button#themeBtn {
