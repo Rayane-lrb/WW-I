@@ -31,7 +31,6 @@ themeBtn.addEventListener("click", () => {
 
 const savedTheme = localStorage.getItem("theme") || "light-theme";
 window.addEventListener("load", () => {
-  themeSwitch(savedTheme);
   fetchImages();
 });
 

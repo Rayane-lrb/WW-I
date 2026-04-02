@@ -2,12 +2,16 @@
 import { addToFavs } from "./favUtils.js";
 import { removeFromFavs } from "./favUtils.js";
 
+const body = document.body;
+const themeBtn = document.getElementById("themeBtn");
+const themeBtnImg = document.getElementById("themeBtn-img");
 const resultContainer = document.getElementById("results-container");
 const searchBar = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
 const geenResultaatbericht = document.getElementById("geenResultaatbericht"); 
 
 window.addEventListener("load", () => {
+  themeSwitch(savedTheme);
   displayFavs();
 });
 
@@ -30,9 +34,6 @@ function displayFavs() {
         <img src="/public/fav_hover.svg" class="fav-icon" width="24" height="24" alt="favoriet" />
       </div>
     `;
-    if (favs.find((fav) => fav.name_nl === item.name_nl)) {
-    }
-
     const favIcons = divCard.querySelectorAll(".fav-icon");
     favIcons.forEach((icon) => {
       icon.addEventListener("click", () => {
@@ -64,6 +65,23 @@ sortSelect.addEventListener("change", () => {
   const selectedValue = sortSelect.value;
   sortCards(selectedValue);
 });
+function sortCards(selectedValue) {
+  const cards = Array.from(document.querySelectorAll(".card"));
+
+  cards.sort((a, b) => {
+    const nameA = a.querySelector("h3").textContent;
+    const nameB = b.querySelector("h3").textContent;
+    const dateA = new Date(a.querySelector(".name_date_div h5").textContent);
+    const dateB = new Date(b.querySelector(".name_date_div h5").textContent);
+
+    if (selectedValue === "az") return nameA.localeCompare(nameB);
+    if (selectedValue === "za") return nameB.localeCompare(nameA);
+    if (selectedValue === "nieuwst") return dateB - dateA;
+    if (selectedValue === "oudste") return dateA - dateB;
+    else return 0;
+  });
+  cards.forEach((card) => resultContainer.appendChild(card));
+}
 searchBar.addEventListener("input", () => {
   const searchedValue = searchBar.value;
   const cards = document.querySelectorAll(".card");
@@ -86,3 +104,23 @@ searchBar.addEventListener("input", () => {
     geenResultaatbericht.style.display = "none";
   }
 });
+function themeSwitch(theme) {
+  body.classList.remove("light-theme", "dark-theme");
+  body.classList.add(theme);
+
+  if (theme === "light-theme") {
+    themeBtnImg.src = "/public/moon.svg";
+  } else if (theme === "dark-theme") {
+    themeBtnImg.src = "/public/sun.svg";
+  }
+}
+
+themeBtn.addEventListener("click", () => {
+  const newTheme = body.classList.contains("dark-theme")
+    ? "light-theme"
+    : "dark-theme";
+  localStorage.setItem("theme", newTheme);
+  themeSwitch(newTheme);
+});
+
+const savedTheme = localStorage.getItem("theme") || "light-theme";
