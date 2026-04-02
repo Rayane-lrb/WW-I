@@ -31,6 +31,7 @@ themeBtn.addEventListener("click", () => {
 
 const savedTheme = localStorage.getItem("theme") || "light-theme";
 window.addEventListener("load", () => {
+  themeSwitch(savedTheme);
   fetchImages();
 });
 
@@ -65,9 +66,9 @@ function displayImages(data) {
         <h3>${item.name_nl}</h3>
         <div class="name_date_div">
           <h3>${item.artist_name}</h3>
-          <h5>${item.real_date}</h5>
+          <h5><img src="public/calendar.svg" alt ="calendar icon" />${item.real_date}</h5>
         </div>
-        <h5 class="postcode">${item.postalcode} Brussel</h5>
+        <h5 class="postcode"><img src="public/location.svg" alt="location icon" />${item.postalcode} Brussel</h5>
         <img src="/public/fav.svg" class="fav-icon" width="24" height="24" alt="favoriet" />
       </div>
     `;
@@ -125,7 +126,7 @@ function sortCards(selectedValue) {
     if (selectedValue === "nieuwst") return dateB - dateA;
     if (selectedValue === "oudste") return dateA - dateB;
     if (selectedValue === "per gemeente") return gemeenteA - gemeenteB;
-    else return ;
+    else return;
   });
   cards.forEach((card) => resultContainer.appendChild(card));
 }
