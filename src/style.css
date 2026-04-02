@@ -21,16 +21,13 @@ body {
   font-size: 20px;
 }
 
-h1,
-h2,
-h3 {
-  font-family: "Playfair Display", serif;
+h1, h2, h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
 }
 
-body,
-p,
-a {
-  font-family: "Raleway", sans-serif;
+body, p, a, button {
+  font-family: 'DM Sans', sans-serif;
 }
 
 a {
