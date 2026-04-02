@@ -8,13 +8,32 @@ const themeBtnImg = document.getElementById("themeBtn-img");
 const resultContainer = document.getElementById("results-container");
 const searchBar = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
-const geenResultaatbericht = document.getElementById("geenResultaatbericht"); 
+const geenResultaatbericht = document.getElementById("geenResultaatbericht");
+const savedTheme = localStorage.getItem("theme") || "light-theme";
+
+function themeSwitch(theme) {
+  body.classList.remove("light-theme", "dark-theme");
+  body.classList.add(theme);
+
+  if (theme === "light-theme") {
+    themeBtnImg.src = "/public/moon.svg";
+  } else if (theme === "dark-theme") {
+    themeBtnImg.src = "/public/sun.svg";
+  }
+}
+
+themeBtn.addEventListener("click", () => {
+  const newTheme = body.classList.contains("dark-theme")
+    ? "light-theme"
+    : "dark-theme";
+  localStorage.setItem("theme", newTheme);
+  themeSwitch(newTheme);
+});
 
 window.addEventListener("load", () => {
   themeSwitch(savedTheme);
   displayFavs();
 });
-
 function displayFavs() {
   const favs = JSON.parse(localStorage.getItem("favs")) || [];
   console.log(favs);
@@ -28,9 +47,9 @@ function displayFavs() {
         <h3>${item.name_nl}</h3>
         <div class="name_date_div">
           <h3>${item.artist_name}</h3>
-          <h5>${item.real_date}</h5>
+          <h5><img src="public/calendar.svg" alt ="calendar icon" />${item.real_date}</h5>
         </div>
-        <h5 class="postcode">${item.postalcode} Brussel</h5>
+        <h5 class="postcode"><img src="public/location.svg" alt="location icon" />${item.postalcode} Brussel</h5>
         <img src="/public/fav_hover.svg" class="fav-icon" width="24" height="24" alt="favoriet" />
       </div>
     `;
@@ -81,7 +100,7 @@ function sortCards(selectedValue) {
     if (selectedValue === "nieuwst") return dateB - dateA;
     if (selectedValue === "oudste") return dateA - dateB;
     if (selectedValue === "per gemeente") return gemeenteA - gemeenteB;
-    else return ;
+    else return;
   });
   cards.forEach((card) => resultContainer.appendChild(card));
 }
@@ -108,24 +127,3 @@ searchBar.addEventListener("input", () => {
     geenResultaatbericht.style.display = "none";
   }
 });
-
-function themeSwitch(theme) {
-  body.classList.remove("light-theme", "dark-theme");
-  body.classList.add(theme);
-
-  if (theme === "light-theme") {
-    themeBtnImg.src = "/public/moon.svg";
-  } else if (theme === "dark-theme") {
-    themeBtnImg.src = "/public/sun.svg";
-  }
-}
-
-themeBtn.addEventListener("click", () => {
-  const newTheme = body.classList.contains("dark-theme")
-    ? "light-theme"
-    : "dark-theme";
-  localStorage.setItem("theme", newTheme);
-  themeSwitch(newTheme);
-});
-
-const savedTheme = localStorage.getItem("theme") || "light-theme";
