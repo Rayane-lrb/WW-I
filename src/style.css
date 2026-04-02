@@ -14,6 +14,9 @@ body.dark-theme .logo {
 body.dark-theme .card {
   background-color: #3a3838;
 }
+body.dark-theme .card .card-info .name_date_div h3#artist-name {
+  color: yellow;
+}
 
 body {
   margin: 0;

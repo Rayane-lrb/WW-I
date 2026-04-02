@@ -46,7 +46,7 @@ function displayFavs() {
       <div class="card-info">
         <h3>${item.name_nl}</h3>
         <div class="name_date_div">
-          <h3>${item.artist_name}</h3>
+          <h3 id="artist-name">${item.artist_name}</h3>
           <h5><img src="public/calendar.svg" alt ="calendar icon" />${item.real_date}</h5>
         </div>
         <h5 class="postcode"><img src="public/location.svg" alt="location icon" />${item.postalcode} Brussel</h5>
