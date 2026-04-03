@@ -68,14 +68,11 @@ function displayFavs() {
           icon.src = "/public/fav.svg";
           removeFromFavs(item);
           geenResultaatbericht.style.display = "block";
-        } else {
-          geenResultaatbericht.style.display = "none";
-        }
-        divCard.remove();
-        if (!favs.length) {
+          divCard.remove();
         } else {
           icon.src = "/public/fav_hover.svg";
           addToFavs(item);
+          geenResultaatbericht.style.display = "none";
         }
       });
     });
